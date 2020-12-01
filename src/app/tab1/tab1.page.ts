@@ -4,7 +4,8 @@ import { ActionSheetController, AlertController, LoadingController } from '@ioni
 import { Router } from '@angular/router';
 import { Data } from '../data.model';
 import { ToastController } from '@ionic/angular';
-import { data } from '../data.interface'
+import { data } from '../data.interface';
+import { IonSlides } from '@ionic/angular';
     
 
 @Component({
@@ -13,9 +14,12 @@ import { data } from '../data.interface'
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
-  const slideOpts = {
+  slider: any;
+  slideOpts = {
     slidesPerView: 1,
+    initialSlide: 0,
+    speed: 400,
+    autoplay:true,
     coverflowEffect: {
       rotate: 100,
       stretch: 0,
@@ -114,21 +118,21 @@ export class Tab1Page {
 
     async presentToast() {
       const toast = await this.toastController.create({
-        message: 'The Item has been added.',
+        message: 'The Item has been added to your cart.',
         duration: 2000
       });
       toast.present();
     }
     async logoutToast() {
       const toast = await this.toastController.create({
-        message: 'You have logged out.',
+        message: 'We\'ll miss you. Come back soon! ❤ ',
         duration: 2000
       });
       toast.present();
     }
     async presentActionSheet() {
       const actionSheet = await this.actionSheetController.create({
-        header: ':Logout?',
+        header: 'Logout?',
         cssClass: 'my-custom-class',
         buttons: [{
           text: 'Logout',
@@ -174,7 +178,7 @@ export class Tab1Page {
       await alert.present();
     }
 
-    async onAddToCart(item: data) {
+    async onAddToCart(item: Data) {
       const alert = await this.alertController.create({
         header: 'Add to cart?',
         subHeader: 'Are you sure?',
@@ -183,8 +187,10 @@ export class Tab1Page {
           {
             text: 'Confirm',
             handler: () => {
+              console.log("Item:" +item);
               this.dataService.addItemToCart(item);
-              console.log("Kya hai yeh? " +this.dataService.addItemToCart(item));
+              this.presentToast();
+              // console.log("Kya hai yeh? " +this.dataService.addItemToCart(item));
             },
           },
           {
@@ -196,8 +202,10 @@ export class Tab1Page {
           }
         ]
       });
+      
       await alert.present();
     }
+
 
     ionViewWillEnter(){
       this.items = this.dataService.items;

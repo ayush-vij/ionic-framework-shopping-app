@@ -8,7 +8,7 @@
       Cart
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="presentLoadingWithOptions()">
+      <ion-button (click)="fusionFunction()">
       <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
     </ion-button>
     </ion-buttons>
@@ -17,19 +17,20 @@
 <ion-content class="ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col>
+        <ion-col size-md="6" offset-md="3">
           <ion-list *ngFor="let item of cartItems; let i=index">
-            <div *ngIf="i > 2">
-            <ion-item detail (click)="presentToast()">
+            <!-- <div *ngIf="i > 2"> -->
+            <ion-item (click)="presentToast()">
               <ion-thumbnail slot="start">
                 <img src="{{item.item_img}}">
               </ion-thumbnail>
               <ion-label>
                 <h2>{{item.item_name}}</h2>
-                <p>{{item.item_price}}</p>
+                <!-- <p>${{item.item_price}}</p> -->
+                <p>${{item.id}}</p>
               </ion-label>
             </ion-item>
-          </div>
+          <!-- </div> -->
           </ion-list>
         </ion-col>
       </ion-row>

@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { DataService } from '../data.service';
 import { data } from '../data.interface';
+import { Data } from '../data.model';
+import { NgIf } from '@angular/common';
+import { ReqsService } from '../reqs.service'
 
 @Component({
   selector: 'app-tab2',
@@ -11,11 +14,13 @@ import { data } from '../data.interface';
 })
 export class Tab2Page {
   cartItems: data [];
+  sendOrder : data [];
 
   constructor(private loadingController: LoadingController,
     private router: Router,
     private dataService: DataService,
-    private alertController: AlertController) {}
+    private alertController: AlertController,
+    private reqs: ReqsService) {}
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
@@ -33,14 +38,38 @@ export class Tab2Page {
     this.router.navigate(['/checkout']);
   }
 
-  isInCart(item: data){
-    return this.dataService.isItemInCart(item);
+  async emptyCartAlert() {
+    const alert = await this.alertController.create({
+      header: 'Cart Empty!',
+      subHeader: 'The cart is empty.',
+      buttons: [
+        {
+          text: 'Shop now!',
+          handler: () => {
+            this.router.navigate(['/tabs/tab1']);
+          },
+        },
+      ]
+    });
+    await alert.present();
+  }
+
+  fusionFunction(){
+    this.presentLoadingWithOptions();
+    this.sendOrder = this.dataService.getOrderItem();
   }
 
 
   ionViewWillEnter(){
     this.cartItems = this.dataService.getCartItems();
+    if(this.cartItems.length<1){
+      this.emptyCartAlert();
+    }
     // console.log(this.cartItems);
+  }
+  onRemoveReqs(id:string){
+    this.reqs.removeReq(id);
+    // this.cartItems = this.reqs.reqs;
   }
 }
 

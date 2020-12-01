@@ -43,6 +43,6 @@ export class RegisterPage implements OnInit {
       this.form.value.pwd,
     );
     this.form.reset();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }

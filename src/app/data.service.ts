@@ -5,7 +5,8 @@ import { data } from './data.interface'
   providedIn: 'root'
 })
 export class DataService {
-private itemsInCart: data[] = [];
+private itemsInCart: Data[] = [];
+private orderItem: Data[] = [];
   
   private _items: Data[] = [
     new Data(
@@ -18,35 +19,35 @@ private itemsInCart: data[] = [];
       new Data(
         'i2',
         'Fountain Pen',
-        5.99,
+        6.49,
         1,
         '../assets/imgs/inkpen.png'
         ),
         new Data(
           'i3',
           'Crayons',
-          5.99,
+          2.99,
           1,
           '../assets/imgs/crayons.png'
           ),
           new Data(
             'i4',
             'Colorful Pencils',
-            5.99,
+            2.49,
             1,
             '../assets/imgs/colorpencils.png'
             ),
             new Data(
               'i5',
               'Post-It',
-              5.99,
+              1.99,
               1,
               '../assets/imgs/postit.png'
               ),
               new Data(
                 'i6',
                 'Notebook',
-                5.99,
+                2.99,
                 1,
                 '../assets/imgs/notebook.png'
                 ),
@@ -59,17 +60,24 @@ private itemsInCart: data[] = [];
       return {...this._items.find(p => p.id === id)};
     }
 
-  addItemToCart(item: data){
-    return this.itemsInCart.push(item);
-    // console.log(this.itemsInCart);
+  addItemToCart(item: Data){
+    this.itemsInCart.push(item);
+  }
+
+  addOrder(item: Data){
+    this.orderItem.push(item);
+  }
+
+  getOrderItem(){
+    return this.orderItem.slice();
   }
   
   getCartItems(){
     return this.itemsInCart.slice();
   }
 
-  isItemInCart(item: data){
-    return this.itemsInCart.find((dataEl: data) => {
+  isItemInCart(item: Data){
+    return this.itemsInCart.find((dataEl: Data) => {
       return dataEl.id === item.id;
     });
   }

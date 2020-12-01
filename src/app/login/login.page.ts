@@ -16,8 +16,12 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   userDetails: User[]=[];
   constructor(private http: HttpClient, private AuthService: AuthService, private router: Router) { }
-
+  ionViewWillEnter(){
+    this.userDetails = this.loadUser();
+    console.log(this.userDetails);  
+  }
   ngOnInit() {
+    
     this.form = new FormGroup({
       'lemail': new FormControl(null,{
         updateOn: 'blur',
@@ -26,8 +30,7 @@ export class LoginPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]}),
       });
-      this.userDetails = this.loadUser();
-      console.log(this.userDetails);
+      this.form.reset();
   //   this.http.get('https://inkSell-ayush.firebaseio.com/newUser.json')
   //   this.form = new FormGroup({
   //     'email': new FormControl(null,{
@@ -60,6 +63,8 @@ export class LoginPage implements OnInit {
               response[key].pwd,
             )
           );
+          console.log("User: " +response[key].email);
+          console.log("User: " +response[key].pwd);
         }
         
       }
@@ -69,7 +74,7 @@ export class LoginPage implements OnInit {
 
   checkUser() {
         if(this.IsUserValid(this.form.value.lemail,this.form.value.lpwd)){
-          console.log("Logeed in!");
+          console.log("Logged in!");
           this.router.navigate(['/tabs']);
         }
         else{
@@ -84,6 +89,7 @@ export class LoginPage implements OnInit {
     return this.userDetails.find(p => {
       return p.email === email && p.pwd === pwd;
     });
+
   }
 
 }

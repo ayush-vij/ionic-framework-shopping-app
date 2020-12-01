@@ -6,6 +6,7 @@ import { Requests } from './reqs.model'
 })
 export class ReqsService {
   private _reqs: Requests[] = [];
+  
   get reqs() {
     return [...this._reqs];
   }
@@ -23,6 +24,10 @@ export class ReqsService {
     );
     this._reqs.push(newReq);
     // console.log("Here" +this._reqs);
+  }
+
+  helloreqs(id: string){
+    return {...this._reqs.find(p => p.id === id)};
   }
   removeReq(id: string){
     const position = this._reqs.findIndex(

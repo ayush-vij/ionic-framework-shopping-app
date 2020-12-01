@@ -20,7 +20,7 @@
       <ion-col size-md="6" offset-md="3">
         <ion-list *ngFor="let reqs of loadedReqs; let i=index">
           <ion-item-sliding>
-            <ion-item>
+            <ion-item detail [routerLink]="['','itemdetails',reqs.id]">
               <ion-label>
                 <h3>{{reqs.name}}</h3>
                 <p><b>{{reqs.category}}</b></p>
