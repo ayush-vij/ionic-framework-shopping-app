@@ -29,6 +29,7 @@ export class ReqsService {
   helloreqs(id: string){
     return {...this._reqs.find(p => p.id === id)};
   }
+  
   removeReq(id: string){
     const position = this._reqs.findIndex(
       p=>p.id===id

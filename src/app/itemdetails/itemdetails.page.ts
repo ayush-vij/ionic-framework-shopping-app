@@ -10,8 +10,8 @@ import { Requests } from '../reqs.model'
   styleUrls: ['./itemdetails.page.scss'],
 })
 export class ItemdetailsPage implements OnInit {
-  item: Requests[];
-  id: String;
+  item: any;
+  id: any;
   constructor(
     private router: Router,
     private reqsService: ReqsService,
